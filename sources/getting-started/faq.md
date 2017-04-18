@@ -1,19 +1,22 @@
-# Keras FAQ:
+# Keras FAQ: Kerasに関するよくある質問
 
-- [Kerasを引用するには？](#keras)
-- [KerasをGPUで動かすには？](#kerasgpu)
-- [Keras modelの保存](#keras-model)
-- [なぜtraining lossがtesting lossよりもずっと大きいのですか？](#training-losstesting-loss)
-- [中間層の出力を可視化するには？](#_1)
-- [メモリに乗らない大きさのデータを扱うには？](#_2)
-- [validation lossが減らなくなったときに学習を中断するには？](#validation-loss)
-- [validation splitはどのように実行されますか？](#validation-split)
-- [訓練時にデータはシャッフルされますか？](#_3)
-- [各epochのtraining/validation lossやaccuracyを記録するには？](#epochtrainingvalidation-lossaccuracy)
-- [層を "freeze" するには？](#freeze)
-- [stateful RNNを利用するには？](#stateful-rnn)
-- [Sequentialモデルから層を取り除くには？](#sequential)
-- [Kerasで事前学習したモデルを使うには？](#keras_1)
+- [Kerasを引用するには？](#how-should-i-cite-keras)
+- [KerasをGPUで動かすには？](#how-can-i-run-keras-on-gpu)
+- ["sample","batch"、"epoch" の意味は？](#what-does-sample-batch-epoch-mean)
+- [Keras modelを保存するには？](#how-can-i-save-a-keras-model)
+- [training lossがtesting lossよりもはるかに大きいのはなぜ？](#why-is-the-training-loss-much-higher-than-the-testing-loss)
+- [中間層の出力を可視化するには？](#how-can-i-obtain-the-output-of-an-intermediate-layer)
+- [メモリに載らない大きさのデータを扱うには？](#how-can-i-use-keras-with-datasets-that-dont-fit-in-memory)
+- [validation lossが減らなくなったときに学習を中断するには？](#how-can-i-interrupt-training-when-the-validation-loss-isnt-decreasing-anymore)
+- [validation splitはどのように実行されますか？](#how-is-the-validation-split-computed)
+- [訓練時にデータはシャッフルされますか？](#is-the-data-shuffled-during-training)
+- [各epochのtraining/validationのlossやaccuracyを記録するには？](#how-can-i-record-the-training-validation-loss-accuracy-at-each-epoch)
+- [層を "freeze" するには？](#how-can-i-freeze-keras-layers)
+- [stateful RNNを利用するには？](#how-can-i-use-stateful-rnns)
+- [Sequentialモデルから層を取り除くには？](#how-can-i-remove-a-layer-from-a-sequential-model)
+- [Kerasで事前学習したモデルを使うには？](#how-can-i-use-pre-trained-models-in-keras)
+- [KerasでHDF5ファイルを入力に使うには？](#how-can-i-use-hdf5-inputs-with-keras)
+- [Kerasの設定ファイルの保存場所は？](#where-is-the-keras-configuration-filed-stored)
 
 ---
 
@@ -41,9 +44,10 @@ Kerasがあなたのお役に立てたら，ぜひ著書のなかでKerasを引�
 THEANO_FLAGS=device=gpu,floatX=float32 python my_keras_script.py
 ```
 
-'gpu'の部分はデバイス識別子に合わせて変更してください(例: gpu0，gpu1など)。
+'gpu'の部分はデバイス識別子に合わせて変更してください(例: `gpu0`，`gpu1`など)。
 
-方法2: `.theanorc`を使う: [使い方](http://deeplearning.net/software/theano/library/config.html)
+方法2: `.theanorc`を使う:
+[使い方](http://deeplearning.net/software/theano/library/config.html)
 
 方法3: コードの先頭で，`theano.config.device`，`theano.config.floatX`を設定する:
 ```python
@@ -54,7 +58,22 @@ theano.config.floatX = 'float32'
 
 ---
 
-### Keras modelの保存
+### "sample","batch"、"epoch" の意味は？
+
+以下の定義は、Kerasを正しく使うために、知っておいて理解する必要があります。
+
+- **Sample**: データセットの一つの要素。
+  - *例:* 一つの画像は畳み込みネットワークの一つの **sample** です
+  - *例:* 一つの音声ファイルは音声認識モデルのための一つの **sample** です
+- **Batch**: *N* のsampleのまとまり。 **batch** 内のサンプルは独立して並列に処理されます。 訓練中は、batchの処理結果によりモデルが一回更新されます。
+  - 一般的に **batch** は、それぞれの入力のみの場合に比べて、入力データのばらつきをよく近似します。batchが大きいほど、その近似は精度良くなります。しかし、そのようなbatchの処理には時間がかかるにも関わらず更新が一度しかされません。推論（もしくは評価、予測）のためには、メモリ領域を超えなくて済む最大のbatchサイズを選ぶのをおすすめします。(なぜなら、batchが大きければ、通常は高速な評価や予測につながるからです）
+- **Epoch**: "データセット全体に対する一回の処理単位"と一般的に定義されている、任意の区切りのこと。訓練のフェーズを明確に区切って、ロギングや周期的な評価するのに利用されます。
+  - `evaluation_data` もしくは `evaluation_split` がKeras modelの `fit` 関数とともに使われるとき、その評価は、各 **epoch** が終わる度に行われます。
+  - Kerasでは、  **epoch** の終わりに実行されるように [callbacks](https://keras.io/callbacks/) を追加することができます。これにより例えば、学習率を変化させることやモデルのチェックポイント（保存）が行えます。
+
+---
+
+### Keras modelを保存するには？
 
 *Kerasのモデルを保存するのに，pickleやcPickleを使うことは推奨されません。*
 
@@ -120,7 +139,7 @@ model.load_weights('my_model_weights.h5')
 
 ---
 
-### なぜtraining lossがtesting lossよりもずっと大きいのですか？
+### training lossがtesting lossよりもはるかに大きいのはなぜ？
 
 Kerasモデルにはtrainingとtestingの二つのモードがあります。DropoutやL1/L2正則化はtesting時には機能しません。
 
@@ -174,7 +193,7 @@ X_encoded = encoder.predict(X)
 
 ---
 
-### メモリに乗らない大きさのデータを扱うには？
+### メモリに載らない大きさのデータを扱うには？
 
 `model.train_on_batch(X, y)`と`model.test_on_batch(X, y)`でバッチ学習ができます。詳細は[models documentation](/models/sequential)を参照してください。
 
@@ -200,8 +219,11 @@ model.fit(X, y, validation_split=0.2, callbacks=[early_stopping])
 
 ### validation splitはどのように実行されますか？
 
-`model.fit`の引数`validation_split`を例えば0.1に設定すると，データの*最後の10％*が検証用に利用されます(0.25なら最後の25％)。
+`model.fit`の引数`validation_split`を例えば0.1に設定すると、データの *最後の10％* が検証のために利用されます。例えば、0.25に設定すると、データの最後の25%が検証に使われます。
+ここで、validation splitからデータを抽出する際にはデータがシャッフルされないことに注意してください。
+なので、検証は文字通り入力データの *最後の* x% のsampleに対して行われます。
 
+（同じ `fit` 関数が呼ばれるならば）全てのepochにおいて、同じ検証用データが使われます。
 
 ---
 
@@ -214,9 +236,10 @@ model.fit(X, y, validation_split=0.2, callbacks=[early_stopping])
 ---
 
 
-### 各epochのtraining/validation lossやaccuracyを記録するには？
+### 各epochのtraining/validationのlossやaccuracyを記録するには？
 
 `model.fit`が返す`History`コールバックの`history`を参照してください。
+`history`はlossや他の指標のリストを含んでいます。
 
 ```python
 hist = model.fit(X, y, validation_split=0.2)
@@ -343,3 +366,54 @@ print(len(model.layers))  # "1"
 - [Style transfer](https://github.com/fchollet/keras/blob/master/examples/neural_style_transfer.py)
 - [Feature visualization](https://github.com/fchollet/keras/blob/master/examples/conv_filter_visualization.py)
 - [Deep dream](https://github.com/fchollet/keras/blob/master/examples/deep_dream.py)
+
+
+---
+
+### KerasでHDF5ファイルを入力に使うには？
+
+`keras.utils.io_utils` から `HDF5Matrix` を使うことができます。
+詳細は[the HDF5Matrix documentation](/utils/#hdf5matrix) を確認してください。
+
+また、HDF5のデータセットを直接使うこともできます：
+
+```python
+import h5py
+with h5py.File('input/file.hdf5', 'r') as f:
+    X_data = f['X_data']
+    model.predict(X_data)
+```
+
+---
+
+### Kerasの設定ファイルの保存場所は？
+
+Kerasのデータが格納されているデフォルトのディレクトリは以下の場所です：
+
+```bash
+$HOME/.keras/
+```
+
+Windowsユーザは `$HOME` を `%USERPROFILE%` に置換する必要があることに注意してください。
+(パーミッション等の問題によって、）Kerasが上記のディレクトリを作成できない場合には、 `/tmp/.keras/` がバックアップとして使われます。
+
+Kerasの設定ファイルはJSON形式で `$HOME/.keras/keras.json` に格納されます。
+デフォルトの設定ファイルは以下のようになっています：
+
+```
+{
+    "image_data_format": "channels_last",
+    "epsilon": 1e-07,
+    "floatx": "float32",
+    "backend": "tensorflow"
+}
+```
+
+この設定ファイルは次のような項目を含んでいます：
+
+- The image data format： デフォルトでは画像処理の層やユーティリティで使われます（`channels_last` もしくは `channels_first` です).
+- `epsilon`： 数値演算におけるゼロによる割算を防ぐために使われる、数値のファジー要素です。
+- デフォルトのfloatのデータ種類。
+- デフォルトのバックエンド。[backend documentation](/backend)を確認してください。
+
+同様に、[`get_file()`](/utils/#get_file)でダウンロードされた、キャッシュ済のデータセットのファイルは、デフォルトでは `$HOME/.keras/datasets/` に格納されます。
