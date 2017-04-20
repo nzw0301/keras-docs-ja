@@ -46,13 +46,15 @@ Noneの場合は，`pool_size`の値が適用されます．
 
 __Input shape__
 
-`data_format='channels_last'`の場合， `(batch_size, rows, cols, channels)`の4次元テンソル．
-`data_format='channels_first'`の場合， `(batch_size, channels, rows, cols)`の4次元テンソルになります．
+- `data_format='channels_last'`の場合， `(batch_size, rows, cols, channels)`の4次元テンソル．
+- `data_format='channels_first'`の場合， `(batch_size, channels, rows, cols)`の4次元テンソル．
 
 __Output shape__
 
-`data_format='channels_last'`の場合， `(batch_size, pooled_rows, pooled_cols, channels)`の4次元テンソル．
-`data_format='channels_first'`の場合， `(batch_size, channels, pooled_rows, pooled_cols)`の4次元テンソルになります．
+- `data_format='channels_last'`の場合，   
+`(batch_size, pooled_rows, pooled_cols, channels)`の4次元テンソル．
+- `data_format='channels_first'`の場合，   
+`(batch_size, channels, pooled_rows, pooled_cols)`の4次元テンソル．
 
 ----
 
@@ -76,11 +78,18 @@ __Arguments__
 
 __Input shape__
 
-`data_format='channels_first'`の場合， `(batch_size, channels, spatial_dim1, spatial_dim2, spatial_dim3)`の5次元テンソル． `data_format='channels_last'`の場合， `(batch_size, spatial_dim1, spatial_dim2, spatial_dim3, channels)`の5次元テンソルになります．
+- `data_format='channels_last'`の場合，   
+`(batch_size, spatial_dim1, spatial_dim2, spatial_dim3, channels)`の5次元テンソル．
+- `data_format='channels_first'`の場合，   
+`(batch_size, channels, spatial_dim1, spatial_dim2, spatial_dim3)`の5次元テンソル．
 
 __Output shape__
 
-`data_format='channels_first'`の場合， `(batch_size, channels, pooled_dim1, pooled_dim2, pooled_dim3)`の5次元テンソル． `data_format='channels_last'`の場合， `(batch_size, pooled_dim1, pooled_dim2, pooled_dim3, channels)`の5次元テンソルになります
+- `data_format='channels_last'`の場合，  
+`(batch_size, pooled_dim1, pooled_dim2, pooled_dim3, channels)`の5次元テンソル．
+- `data_format='channels_first'`の場合，   
+`(batch_size, channels, pooled_dim1, pooled_dim2, pooled_dim3)`の5次元テンソル．
+
 
 ----
 
@@ -131,13 +140,15 @@ __Arguments__
 
 __Input shape__
 
-`data_format='channels_last'`の場合， `(batch_size, rows, cols, channels)`の4次元テンソル．
-`data_format='channels_first'`の場合， `(batch_size, channels, rows, cols)`の4次元テンソルになります．
+- `data_format='channels_last'`の場合，`(batch_size, rows, cols, channels)`の4次元テンソル．
+- `data_format='channels_first'`の場合，`(batch_size, channels, rows, cols)`の4次元テンソル．
 
 __Output shape__
 
-`data_format='channels_last'`の場合， `(batch_size, pooled_rows, pooled_cols, channels)`の4次元テンソル．
-`data_format='channels_first'`の場合， `(batch_size, channels, pooled_rows, pooled_cols)`の4次元テンソルになります．
+- `data_format='channels_last'`の場合，   
+`(batch_size, pooled_rows, pooled_cols, channels)`の4次元テンソル．
+- `data_format='channels_first'`の場合，   
+`(batch_size, channels, pooled_rows, pooled_cols)`の4次元テンソル．
 
 ----
 
@@ -161,11 +172,19 @@ __Arguments__
 
 __Input shape__
 
-`data_format='channels_first'`の場合， `(batch_size, channels, spatial_dim1, spatial_dim2, spatial_dim3)`の5次元テンソル． `data_format='channels_last'`の場合， `(batch_size, spatial_dim1, spatial_dim2, spatial_dim3, channels)`の5次元テンソルになります．
+- `data_format='channels_last'`の場合，   
+`(batch_size, spatial_dim1, spatial_dim2, spatial_dim3, channels)`の5次元テンソル．
+- `data_format='channels_first'`の場合，   
+`(batch_size, channels, spatial_dim1, spatial_dim2, spatial_dim3)`の5次元テンソル．
+
 
 __Output shape__
 
-`data_format='channels_first'`の場合， `(batch_size, channels, pooled_dim1, pooled_dim2, pooled_dim3)`の5次元テンソル． `data_format='channels_last'`の場合， `(batch_size, pooled_dim1, pooled_dim2, pooled_dim3, channels)`の5次元テンソルになります．
+- `data_format='channels_last'`の場合，  
+`(batch_size, pooled_dim1, pooled_dim2, pooled_dim3, channels)`の5次元テンソル．
+- `data_format='channels_first'`の場合，   
+`(batch_size, channels, pooled_dim1, pooled_dim2, pooled_dim3)`の5次元テンソル．
+
 
 ----
 
@@ -225,8 +244,8 @@ __Auguments__
 
 __Input shape__
 
-`data_format='channels_last'`の場合， `(batch_size, rows, cols, channels)`の4次元テンソル．
-`data_format='channels_first'`の場合， `(batch_size, channels, rows, cols)`の4次元テンソルになります．
+- `data_format='channels_last'`の場合， `(batch_size, rows, cols, channels)`の4次元テンソル．
+- `data_format='channels_first'`の場合， `(batch_size, channels, rows, cols)`の4次元テンソル．
 
 __Output shape__
 
@@ -250,8 +269,8 @@ __Auguments__
 
 __Input shape__
 
-`data_format='channels_last'`の場合， `(batch_size, rows, cols, channels)`の4次元テンソル．
-`data_format='channels_first'`の場合， `(batch_size, channels, rows, cols)`の4次元テンソルになります．
+- `data_format='channels_last'`の場合， `(batch_size, rows, cols, channels)`の4次元テンソル．
+- `data_format='channels_first'`の場合， `(batch_size, channels, rows, cols)`の4次元テンソル．
 
 __Output shape__
 
