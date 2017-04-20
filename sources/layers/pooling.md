@@ -177,6 +177,7 @@ keras.layers.pooling.GlobalMaxPooling1D()
 ```
 
 時系列データのためのグルーバルなマックスプーリング演算．
+グローバルとは"特徴マップ全てに対して"という意味です．
 
 __Input shape__
 
