@@ -5,7 +5,7 @@
 - ["sample","batch"、"epoch" の意味は？](#samplebatchepoch)
 - [Keras modelを保存するには？](#keras-model)
 - [training lossがtesting lossよりもはるかに大きいのはなぜ？](#training-losstesting-loss)
-- [中間層の出力を可視化するには？](#_1)
+- [中間層の出力を得るには？](#_1)
 - [メモリに載らない大きさのデータを扱うには？](#_2)
 - [validation lossが減らなくなったときに学習を中断するには？](#validation-loss)
 - [validation splitはどのように実行されますか？](#validation-split)
@@ -176,9 +176,22 @@ Kerasモデルにはtrainingとtestingの二つのモードがあります。Dro
 
 ---
 
-### 中間層の出力を可視化するには？
+### 中間層の出力を得るには？
 
-以下のように，ある入力を与えたときの，ある層の出力を返すKeras functionを記述できます:
+シンプルな方法は、着目している層の出力を行うための新しい `Model` を作成することです：
+
+```python
+from keras.models import Model
+
+model = ...  # create the original model
+
+layer_name = 'my_layer'
+intermediate_layer_model = Model(inputs=model.input,
+                                 outputs=model.get_layer(layer_name).output)
+intermediate_output = intermediate_layer_model.predict(data)
+```
+
+別の方法として、ある入力が与えられたときにに、ある層の出力を返すKeras functionを以下のように記述することでも可能です：
 
 ```python
 from keras import backend as K
@@ -189,9 +202,9 @@ get_3rd_layer_output = K.function([model.layers[0].input],
 layer_output = get_3rd_layer_output([X])[0]
 ```
 
-直接TheanoやTensorFlowのfunctionを利用することもできます。
+同様に、TheanoやTensorFlowのfunctionを直接利用することもできます。
 
-注: 訓練時とテスト時でモデルの振る舞いが異なる場合(例: `Dropout`や`BatchNormalization`利用時など)，以下のようにlearning phaseフラグを利用してください:
+ただし、学習時とテスト時でモデルの振る舞いが異なる場合(例えば `Dropout`や`BatchNormalization` の利用時など)、以下のようにlearning phaseフラグを利用してください:
 
 ```python
 get_3rd_layer_output = K.function([model.layers[0].input, K.learning_phase()],
@@ -202,22 +215,6 @@ layer_output = get_3rd_layer_output([X, 0])[0]
 
 # output in train mode = 1
 layer_output = get_3rd_layer_output([X, 1])[0]
-```
-
-その他の中間層の出力を取得する方法については，[functional API](/getting-started/functional-api-guide)を参照してください。例えばMNISTに対してautoencoderを作成したとします:
-
-```python
-inputs = Input(shape=(784,))
-encoded = Dense(32, activation='relu')(inputs)
-decoded = Dense(784)(encoded)
-model = Model(input=inputs, output=decoded)
-```
-
-コンパイルと学習後のモデルから，次のようにしてencoderからの出力を得ることができます:
-
-```python
-encoder = Model(input=inputs, output=encoded)
-X_encoded = encoder.predict(X)
 ```
 
 ---
