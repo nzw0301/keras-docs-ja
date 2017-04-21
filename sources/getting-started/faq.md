@@ -77,15 +77,15 @@ theano.config.floatX = 'float32'
 
 *Kerasのモデルを保存するのに，pickleやcPickleを使うことは推奨されません。*
 
-`model.save(filepath)`を使うことで，以下の含む単一のHDF5ファイルにKerasのモデルを保存できます．
+`model.save(filepath)`を使うことで、単一のHDF5ファイルにKerasのモデルを保存できます。このHDF5ファイルは以下を含みます。
 
 - 再構築可能なモデルの構造
 - モデルの重み
-- 学習時の設定 (損失関数，最適化アルゴリズム)
-- 最適化アルゴリズムの状態，学習を終えた時点から正確に継続して学習可能
+- 学習時の設定 (loss、optimizer)
+- optimizerの状態。これにより、学習を終えた時点から正確に学習を再開できます
 
-`keras.models.load_model(filepath)`でモデルを再インスタンス化できます．
-`load_model` は，保存してモデルの設定を使い，コンパイルも行います(ただし最初にモデルを定義した際に一度もコンパイルされなかった場合を除く)．
+`keras.models.load_model(filepath)`でモデルを再インスタンス化できます。
+`load_model` は、学習時の設定を利用して、モデルのコンパイルも行います（ただし、最初にモデルを定義した際に、一度もコンパイルされなかった場合を除く）。
 
 例:
 
@@ -100,7 +100,7 @@ del model  # deletes the existing model
 model = load_model('my_model.h5')
 ```
 
-**モデルのアーキテクチャ** のみ(weightパラメータを含まない)を保存する場合は以下の通りです:
+**モデルのアーキテクチャ** (weightパラメータや学習時の設定は含まない)のみを保存する場合は、以下のように行ってください:
 
 ```python
 # save as JSON
@@ -110,9 +110,9 @@ json_string = model.to_json()
 yaml_string = model.to_yaml()
 ```
 
-生成されたJSON / YAMLファイルは，人間可読であり，必要に応じて人手で編集可能です．
+生成されたJSON / YAMLファイルは、人が読むことができ、必要に応じて編集可能です。
 
-保存したデータから，以下のように新しいモデルを作成できます:
+保存したデータから、以下のように新しいモデルを作成できます:
 
 ```python
 # model reconstruction from JSON:
@@ -120,21 +120,50 @@ from keras.models import model_from_json
 model = model_from_json(json_string)
 
 # model reconstruction from YAML
+from keras.models import model_from_yaml
 model = model_from_yaml(yaml_string)
 ```
 
-**モデルの重み** を保存する場合，以下のようにHDF5を使います。
+**モデルの重み** を保存する必要がある場合、以下のコードのようにHDF5を利用できます。
 
-注: HDF5とPythonライブラリの h5pyがインストールされている必要があります(Kerasには同梱されていません)。
+注: 予め、HDF5とPythonライブラリの h5pyがインストールされている必要があります(Kerasには同梱されていません)。
 
 ```python
 model.save_weights('my_model_weights.h5')
 ```
 
-モデルのインスタンス作成後，同じモデルアーキテクチャのweightパラメータを以下のようにロードします:
+モデルのインスタンス作成後、 *同じ* アーキテクチャのモデルへweightパラメータをロードできます:
 
 ```python
 model.load_weights('my_model_weights.h5')
+```
+
+例えば、ファインチューニングや転移学習のために、 *異なる* アーキテクチャのモデル(ただし幾つか共通の層を保持)へweightsパラメータをロードする必要がある場合、 *層の名前* を指定することでweightsパラメータをロードできます。
+
+
+```python
+model.load_weights('my_model_weights.h5', by_name=True)
+```
+
+例:
+
+```python
+"""
+Assume original model looks like this:
+    model = Sequential()
+    model.add(Dense(2, input_dim=3, name="dense_1"))
+    model.add(Dense(3, name="dense_2"))
+    ...
+    model.save_weights(fname)
+"""
+
+# new model
+model = Sequential()
+model.add(Dense(2, input_dim=3, name="dense_1"))  # will be loaded
+model.add(Dense(10, name="new_dense"))  # will not be loaded
+
+# load weights from first model; will only affect the first layer, dense_1.
+model.load_weights(fname, by_name=True)
 ```
 
 ---
