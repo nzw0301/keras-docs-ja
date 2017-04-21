@@ -22,7 +22,7 @@
 
 ### Kerasを引用するには？
 
-Kerasがあなたのお役に立てたら，ぜひ著書のなかでKerasを引用してください．BibTexの例は以下の通りです．
+Kerasがあなたの仕事の役に立ったなら，ぜひ著書のなかでKerasを引用してください．BibTexの例は以下の通りです：
 
 ```
 @misc{chollet2015keras,
@@ -49,7 +49,7 @@ THEANO_FLAGS=device=gpu,floatX=float32 python my_keras_script.py
 方法2: `.theanorc`を使う:
 [使い方](http://deeplearning.net/software/theano/library/config.html)
 
-方法3: コードの先頭で，`theano.config.device`，`theano.config.floatX`を設定する:
+方法3: コードの先頭で，`theano.config.device`，`theano.config.floatX`を手動で設定する:
 ```python
 import theano
 theano.config.device = 'gpu'
@@ -60,7 +60,7 @@ theano.config.floatX = 'float32'
 
 ### "sample","batch"，"epoch" の意味は？
 
-以下の定義は，Kerasを正しく使うために，知っておいて理解する必要があります．
+Kerasを正しく使うためには，以下の定義を知り，理解しておく必要があります：
 
 - **Sample**: データセットの一つの要素．
   - *例:* 一つの画像は畳み込みネットワークの一つの **sample** です
@@ -170,9 +170,9 @@ model.load_weights(fname, by_name=True)
 
 ### training lossがtesting lossよりもはるかに大きいのはなぜ？
 
-Kerasモデルにはtrainingとtestingの二つのモードがあります．DropoutやL1/L2正則化はtesting時には機能しません．
+Kerasモデルにはtrainingとtestingという二つのモードがあります．DropoutやL1/L2正則化のような，正則化手法はtestingの際には機能しません．
 
-さらに，training lossは訓練データの各バッチのlossの平均です．モデルは変化していくため，各epochの最初のバッチのlossは最後のバッチのlossよりもかなり大きくなります．一方，testing lossは各epochの最後に計算されるため，lossが小さくなります．
+さらに，training lossは訓練データの各バッチのlossの平均です．モデルは変化していくため，各epochの最初のバッチのlossは最後のバッチのlossよりもかなり大きくなります．一方，testing lossは各epochの最後の状態のモデルを使って計算されるため，lossが小さくなります．
 
 ---
 
@@ -221,9 +221,9 @@ layer_output = get_3rd_layer_output([X, 1])[0]
 
 ### メモリに載らない大きさのデータを扱うには？
 
-`model.train_on_batch(X, y)`と`model.test_on_batch(X, y)`でバッチ学習ができます．詳細は[models documentation](/models/sequential)を参照してください．
+`model.train_on_batch(X, y)`と`model.test_on_batch(X, y)` を使うことでバッチ学習ができます．詳細は[モデルに関するドキュメント](/models/sequential)を参照してください．
 
-その他に，ジェネレータを使うこともできます． `model.fit_generator(data_generator, samples_per_epoch, nb_epoch)`
+代わりに，訓練データのバッチを生成するジェネレータを記述して， `model.fit_generator(data_generator, samples_per_epoch, nb_epoch)` の関数を使うこともできます．
 
 実際のバッチ学習の方法については，[CIFAR10 example](https://github.com/fchollet/keras/blob/master/examples/cifar10_cnn.py)を参照してください．
 
@@ -239,15 +239,13 @@ early_stopping = EarlyStopping(monitor='val_loss', patience=2)
 model.fit(X, y, validation_split=0.2, callbacks=[early_stopping])
 ```
 
-詳細は[callbacks documentation](/callbacks)を参照してください．
+詳細は[コールバックに関するドキュメント](/callbacks)を参照してください．
 
 ---
 
 ### validation splitはどのように実行されますか？
 
-`model.fit`の引数`validation_split`を例えば0.1に設定すると，データの *最後の10％* が検証のために利用されます．例えば，0.25に設定すると，データの最後の25%が検証に使われます．
-ここで，validation splitからデータを抽出する際にはデータがシャッフルされないことに注意してください．
-なので，検証は文字通り入力データの *最後の* x% のsampleに対して行われます．
+`model.fit` の引数 `validation_split` を例えば0.1に設定すると，データの *最後の10％* が検証のために利用されます．例えば，0.25に設定すると，データの最後の25%が検証に使われます．ここで，validation splitからデータを抽出する際にはデータがシャッフルされないことに注意してください．なので，検証は文字通り入力データの *最後の* x% のsampleに対して行われます．
 
 （同じ `fit` 関数が呼ばれるならば）全てのepochにおいて，同じ検証用データが使われます．
 
@@ -255,17 +253,16 @@ model.fit(X, y, validation_split=0.2, callbacks=[early_stopping])
 
 ### 訓練時にデータはシャッフルされますか？
 
-`model.fit`の引数`shuffle`が`True`であればシャッフルされます(初期値はTrueです)．各epochでデータはランダムにシャッフルされます．
+`model.fit` の引数 `shuffle` が `True` であればシャッフルされます(初期値はTrueです)．各epochで訓練データはランダムにシャッフルされます．
 
-検証用データ(validation data)はシャッフルされません．
+検証用データはシャッフルされません．
 
 ---
 
 
 ### 各epochのtraining/validationのlossやaccuracyを記録するには？
 
-`model.fit`が返す`History`コールバックの`history`を参照してください．
-`history`はlossや他の指標のリストを含んでいます．
+`model.fit` が返す `History` コールバックの `history` を参照してください． `history` はlossや他の指標のリストを含んでいます．
 
 ```python
 hist = model.fit(X, y, validation_split=0.2)
@@ -276,16 +273,16 @@ print(hist.history)
 
 ### 層を "freeze" するには？
 
-層を "freeze" することは学習から層を除外することを意味します，すなわちその重みは決して更新されません．
-このことはモデルのfine-tuningやテキスト入力のための固定されたembeddingsを使用するという文脈において有用です．
+層を "freeze" することは学習からその層を除外することを意味します，その場合，その層の重みは更新されなくなります．
+このことはモデルのファインチューニングやテキスト入力のための固定されたembeddingsを使用する際に有用です．
 
-層のコンストラクタの`trainable`に真偽値をに渡すことで，層を学習しないようにできます．
+層のコンストラクタの `trainable` 引数に真偽値を渡すことで，層が学習しないようにできます．
 
 ```python
 frozen_layer = Dense(32, trainable=False)
 ```
 
-加えて，インスタンス化後に層の`trainable`propertyに`True`か`False` を与えることができます．このことによる影響としては，`trainable`propertyの変更後のモデルで`compile()`を呼ぶ必要があります．以下にその例を示します:
+加えて，インスタンス化後に層の `trainable` propertyに `True` か `False` を設定することができます．設定の有効化のためには， `trainable` propertyの変更後のモデルで `compile()` を呼ぶ必要があります．以下にその例を示します:
 
 ```python
 x = Input(shape=(32,))
@@ -311,24 +308,26 @@ trainable_model.fit(data, labels)  # this updates the weights of `layer`
 
 ### stateful RNNを利用するには？
 
-stateful RNNでは各バッチの内部状態を次のバッチの初期状態として再利用します．
+RNNをstatefulにするとは，各バッチのサンプルの状態が，次のバッチのサンプルのための初期状態として再利用されるということを意味します．
 
-sateful RNNを利用する際は，以下を仮定します:
+stateful RNNが使われるときには以下のような状態となっているはずです：
 
-- 全てのバッチのサンプル数が同じ
-- `X1`と`X2`が連続するバッチであるとき，各`i`について`X2[i]`は`X1[i]`のfollow-upシーケンスになっている
+- 全てのバッチのサンプル数が同じである
+- `X1` と `X2` が連続するバッチであるとき，各 `i`に ついて `X2[i]` は `X1[i]` のfollow-upシーケンスになっている
 
-stateful RNNを利用するには:
+実際にstateful RNNを利用するには，以下を行う必要があります:
 
-- 最初の層の引数`batch_input_shape`で明示的にバッチサイズを指定してください．バッチサイズはタプルで，例えば32 samples，10 timesteps，特徴量16次元の場合，`(32, 10, 16)`となります
-- RNN層で`stateful=True`を指定してください
+- `batch_size` 引数をモデルの最初の層に渡して，バッチサイズを明示的に指定してください． 例えば，サンプル数が32，タイムステップが10，特徴量の次元が16の場合には，`batch_size=32` としてください．
+- RNN層で`stateful=True`を指定してください．
+- fit() を呼ぶときには `shuffle=False` を指定してください．
 
-積算された状態をリセットするには:
+蓄積された状態をリセットするには:
 
-- 全層の状態をリセットするには，`model.reset_states()`を利用してください
+- モデルの全ての層の状態をリセットするには，`model.reset_states()`を利用してください
 - 特定のstateful RNN層の状態をリセットするには，`layer.reset_states()`を利用してください
 
 例:
+
 
 ```python
 
@@ -336,7 +335,7 @@ X  # this is our input data, of shape (32, 21, 16)
 # we will feed it to our model in sequences of length 10
 
 model = Sequential()
-model.add(LSTM(32, batch_input_shape=(32, 10, 16), stateful=True))
+model.add(LSTM(32, input_shape=(10, 16), batch_size=32, stateful=True))
 model.add(Dense(16, activation='softmax'))
 
 model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
@@ -354,12 +353,13 @@ model.reset_states()
 model.layers[0].reset_states()
 ```
 
-注: `predict`, `fit`, `train_on_batch`, `predict_classes`メソッドなどは全て，stateful層の状態を更新します．そのため，訓練だけでなく，statefulな予測も可能となります．
+`predict`, `fit`, `train_on_batch`, `predict_classes` などの関数は *いずれも* stateful層の状態を更新することに注意してください．そのため，statefulな訓練だけでなく，statefulな予測も可能となります．
 
 ---
 
 ### Sequentialモデルから層を取り除くには？
-`.pop()`を使うことで，Sequentialモデルへ最後に追加した層を削除できます．
+
+`.pop()`を使うことで，Sequentialモデルへ最後に追加した層を削除できます：
 
 ```python
 model = Sequential()
@@ -376,7 +376,7 @@ print(len(model.layers))  # "1"
 
 ### Kerasで事前学習したモデルを使うには？
 
-以下の画像分類用のモデルのコードと事前学習した重みが利用可能です．
+以下の画像分類のためのモデルのコードと事前学習した重みが利用可能です：
 
 - Xception
 - VGG-16
@@ -407,13 +407,12 @@ model = VGG16(weights='imagenet', include_top=True)
 - [Feature visualization](https://github.com/fchollet/keras/blob/master/examples/conv_filter_visualization.py)
 - [Deep dream](https://github.com/fchollet/keras/blob/master/examples/deep_dream.py)
 
-
 ---
 
 ### KerasでHDF5ファイルを入力に使うには？
 
 `keras.utils.io_utils` から `HDF5Matrix` を使うことができます．
-詳細は[the HDF5Matrix documentation](/utils/#hdf5matrix) を確認してください．
+詳細は[HDF5Matrixに関するドキュメント](/utils/#hdf5matrix) を確認してください．
 
 また，HDF5のデータセットを直接使うこともできます：
 
@@ -428,7 +427,7 @@ with h5py.File('input/file.hdf5', 'r') as f:
 
 ### Kerasの設定ファイルの保存場所は？
 
-Kerasのデータが格納されているデフォルトのディレクトリは以下の場所です：
+Kerasの全てのデータが格納されているデフォルトのディレクトリは以下の場所です：
 
 ```bash
 $HOME/.keras/
@@ -454,6 +453,6 @@ Kerasの設定ファイルはJSON形式で `$HOME/.keras/keras.json` に格納�
 - The image data format： デフォルトでは画像処理の層やユーティリティで使われます（`channels_last` もしくは `channels_first` です).
 - `epsilon`： 数値演算におけるゼロによる割算を防ぐために使われる，数値のファジー要素です．
 - デフォルトのfloatのデータ種類．
-- デフォルトのバックエンド．[backend documentation](/backend)を確認してください．
+- デフォルトのバックエンド．[backendに関するドキュメント](/backend)を確認してください．
 
 同様に，[`get_file()`](/utils/#get_file)でダウンロードされた，キャッシュ済のデータセットのファイルは，デフォルトでは `$HOME/.keras/datasets/` に格納されます．
