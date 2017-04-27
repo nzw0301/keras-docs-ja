@@ -44,7 +44,7 @@ compile(self, optimizer, loss, metrics=None, loss_weights=None, sample_weight_mo
 __引数__
 
 - __optimizer__: 文字列(optimizer名)またはoptimizerのオブジェクト．詳細は[optimizers](/optimizers)を参照．
-- __loss__: 文字列(目的関数の名前)または目的関数．詳細は[objectives](/objectives)を参照．モデルが複数の出力を持つ場合は，オブジェクトの辞書かリストを渡すことで，各出力に異なる損失を用いることができます．
+- __loss__: 文字列(目的関数の名前)または目的関数．詳細は[losses](/losses)を参照．モデルが複数の出力を持つ場合は，オブジェクトの辞書かリストを渡すことで，各出力に異なる損失を用いることができます．
 - __metrics__: 学習時とテスト時にモデルにより評価されるメトリクスのリスト．一般的には`metrics=['accuracy']`を使うことになります．マルチ出力モデルの各出力のための各メトリクスを指定するために，`metrics={'output_a': 'accuracy'}`のような辞書を渡すこともできます．
 - __loss_weights__: 異なるモデルの出力における損失寄与度に重み付けをするためのスカラー係数（Python の float値）を表すオプションのリスト，または辞書．
 - __sample_weight_mode__: タイムステップ毎にサンプルを重み付け（2次元の重み）する場合は，この値を`temporal`に設定してください．`None`はデフォルト値で，サンプル毎の重み（1次元の重み）です．モデルが複数の出力をする時，modeの辞書かリストを渡すことで，各出力に異なる`sample_weight_mode`を使うことができます．
@@ -79,6 +79,7 @@ __引数__
 - __shuffle__: 学習データを各試行の前にシャッフルするかどうかを示すboolean．
 - __class_weight__: クラスのインデックスと重み（float）をマップするオプションの辞書で，学習時に各クラスのサンプルに関するモデルの損失に適用します．これは過小評価されたクラスのサンプルに「より注意を向ける」ようモデルに指示するために有用です．
 - __sample_weight__: xと同じサイズのオプションの配列で，各サンプルに関してモデルの損失に割り当てる重みを含みます．時間データの場合に，(samples, sequence_length)の形式の2次元配列を渡すことができ，各サンプルの各タイムステップに異なる重みを割り当てられます．この場合，compile()内で，sample_weight_mode="temporal"と指定するようにします．
+- __initial_epoch__: 学習を開始するエポック（前回の学習を再開するのに便利です）．
 
 
 __戻り値__
@@ -290,7 +291,7 @@ evaluate_generator(self, generator, steps, max_q_size=10, workers=1, pickle_safe
 
 ジェネレータは`test_on_batch`で受け取られたのと同じ種類のデータを返します．
 
-- __引数__:
+__引数__:
 - __generator__: ジェネレータは(inputs, targets)もしくは(inputs, targets, sample_weights)のタプルを使用します．
 - __steps__: 終了する前に`generator`から使用する総ステップ数（サンプルのバッチ数）．
 - __max_q_size__: ジェネレータのキューのための最大サイズ．
@@ -324,6 +325,7 @@ __引数__
 - __max_q_size__: ジェネレータのキューの最大サイズ．
 - __workers__: スレッドベースのプロセス使用時の最大プロセス数．
 - __pickle_safe__: Trueならスレッドベースのプロセスを使います．実装がmultiprocessingに依存しているため，子プロセスに簡単に渡すことができないものとしてPickableでない引数をgeneratorに渡すべきではないことに注意してください．
+- __verbose__: 冗長モードで，0または1．
 
 __返り値__
 
