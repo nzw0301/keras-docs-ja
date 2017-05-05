@@ -1,4 +1,4 @@
-# Sequentialモデルでkerasを始めてみよう
+# SequentialモデルでKerasを始めてみよう
 
 `Sequential` (系列) モデルは層を積み重ねたものです．
 
@@ -88,7 +88,7 @@ model.compile(optimizer='rmsprop',
 
 ## 学習
 
-kerrasのモデルはNumpyの配列として入力データとラベルデータから学習を行います．モデルを訓練するときは，一般に`fit`関数を使います．[ドキュメントはこちら](/models/sequential).
+KerasのモデルはNumpyの配列として入力データとラベルデータから学習を行います．モデルを訓練するときは，一般に`fit`関数を使います．[ドキュメントはこちら](/models/sequential).
 
 ```python
 # 一つの入力から2クラス分類をするモデルにおいては
@@ -136,7 +136,7 @@ model.fit(data, one_hot_labels, epochs=10, batch_size=32)
 
 ## 例
 
-いますぐkerasを始められるようにいくつか例を用意しました！
+いますぐKerasを始められるようにいくつか例を用意しました！
 
 [examples folder](https://github.com/fchollet/keras/tree/master/examples)フォルダにはリアルデータセットを利用したモデルがあります．
 
