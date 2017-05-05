@@ -35,7 +35,7 @@ model.add(Activation('relu'))
 
 - 最初の層の `input_shape`引数を指定する．この引数にはshapeを示すタプルを与えます (このタプルの要素は整数か `None`を取ります．`None`は任意の正の整数を期待することを意味します)．
 - `Dense` のような二次元の層では `input_dim`引数を指定することで入力のshapeを指定するできます．同様に，三次元の層では `input_dim`引数と `input_length`引数を指定することで入力のshapeを指定できます．
-- （stateful reccurent networkなどで）バッチサイズを指定したい場合， `batch_size`引数を指定することができます．もし， `batch_size=32`と `input_shape=(6,8)`を同時に指定した場合，想定されるバッチごとの入力のshapeは `(32,6,8)`となります．
+- （stateful reccurent networkなどで）バッチサイズを指定したい場合， `batch_size`引数を指定することができます．もし， `batch_size=32`と `input_shape=(6, 8)`を同時に指定した場合，想定されるバッチごとの入力のshapeは `(32, 6, 8)`となります．
 
 
 このため，次のコードは等価となります．
