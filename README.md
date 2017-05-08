@@ -45,19 +45,11 @@ contributeいただける方は，[this TODO spreadsheet](https://docs.google.co
 
 | English | 日本語
 |:---|:---
-<<<<<<< HEAD
 | arguments | 引数
 | data augumentation | データ拡張
 | layer | レイヤー
 | loss function | 損失関数
 | return | 戻り値
-=======
-| Arguments | 引数
-| Data augumentation | データ拡張
-| layer | レイヤー
-| loss function | 損失関数
-| Return | 戻り値
->>>>>>> origin/keras-2
 | recurrent  | recurrent
 | shape | shape
 | target | ターゲット
