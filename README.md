@@ -55,8 +55,6 @@ contributeいただける方は，[this TODO spreadsheet](https://docs.google.co
 | target | ターゲット
 | testing | テスト
 | training | 学習
-|recurrent|recurrent
-|shape|shape
 
 ※ 見つけやすいようにアルファベット順で列挙しています．
 必要に応じて追記してください．
