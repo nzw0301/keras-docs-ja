@@ -43,15 +43,16 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
     - __data_format__: `"channels_last"`(デフォルト)か`"channels_first"`を指定します. `"channels_last"`の場合，入力の型は`(samples, height, width, channels)`となり，"channels_first"の場合は`(samples, channels, height, width)`となります．デフォルトはKerasの設定ファイル`~/.keras/keras.json`の`image_data_format`の値です．一度も値を変更していなければ，"channels_last"になります．
 
 - __Methods__:
-    - __fit(X)__: featurewise_center，featurewise_std_normalization，または，zca_whiteningが指定されたときに必要になります．いくつかのサンプルに対して必要な値を計算します．
+    - __fit(x)__: 与えられたサンプルデータに基づいて，データに依存する統計量を計算します．
+    featurewise_center，featurewise_std_normalization，または，zca_whiteningが指定されたときに必要になります．
         - __引数__:
-            - __X__: サンプルデータ．
+            - __x__: サンプルデータ．
             - __augment__: 真理値（デフォルト: False）．ランダムにサンプルを拡張するかどうか．
             - __rounds__: 整数（デフォルト: 1）．augumentが与えられたときに，利用するデータに対して何回データ拡張を行うか．
             - __seed__: 整数 (デフォルト: None). ランダムシード.
-    - __flow(X, y)__: numpyデータとラベルのarrayを受け取り，拡張/正規化したデータのバッチを生成する．無限ループ内で，無限にバッチを生成します．
+    - __flow(x, y)__: numpyデータとラベルのarrayを受け取り，拡張/正規化したデータのバッチを生成する．無限ループ内で，無限にバッチを生成します．
         - __引数__:
-            - __X__: データ．4次元データである必要があります．RGBではチャネルを3に, グレースケールではチャネルを1にしてください．
+            - __x__: データ．4次元データである必要があります．RGBではチャネルを3に, グレースケールではチャネルを1にしてください．
             - __y__: ラベル．
             - __batch_size__: 整数（デフォルト: 32）．
             - __shuffle__: 真理値（デフォルト: False）．
@@ -74,14 +75,14 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
             - __save_format__: "png"または"jpeg"（`set_to_dir`に引数が与えられた時のみ有効）．デフォルトは"jpeg"．
             - __follow_links__: サブディレクトリ内のシンボリックリンクに従うかどうか．デフォルトはFalse．
 
-- __Examples:__:
+- __Examples__:
 
-`.flow(X, y)`の使用例:
+`.flow(x, y)`の使用例:
 
 ```python
-(X_train, y_train), (X_test, y_test) = cifar10.load_data()
-Y_train = np_utils.to_categorical(y_train, num_classes)
-Y_test = np_utils.to_categorical(y_test, num_classes)
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+y_train = np_utils.to_categorical(y_train, num_classes)
+y_test = np_utils.to_categorical(y_test, num_classes)
 
 datagen = ImageDataGenerator(
     featurewise_center=True,
@@ -93,20 +94,20 @@ datagen = ImageDataGenerator(
 
 # compute quantities required for featurewise normalization
 # (std, mean, and principal components if ZCA whitening is applied)
-datagen.fit(X_train)
+datagen.fit(x_train)
 
 # fits the model on batches with real-time data augmentation:
-model.fit_generator(datagen.flow(X_train, Y_train, batch_size=32),
-                    steps_per_epoch=len(X_train), epochs=epochs)
+model.fit_generator(datagen.flow(x_train, y_train, batch_size=32),
+                    steps_per_epoch=len(x_train), epochs=epochs)
 
 # here's a more "manual" example
 for e in range(epochs):
-    print 'Epoch', e
+    print('Epoch', e)
     batches = 0
-    for X_batch, Y_batch in datagen.flow(X_train, Y_train, batch_size=32):
-        loss = model.train(X_batch, Y_batch)
+    for x_batch, y_batch in datagen.flow(x_train, y_train, batch_size=32):
+        model.train(x_batch, y_batch)
         batches += 1
-        if batches >= len(X_train) / 32:
+        if batches >= len(x_train) / 32:
             # we need to break the loop by hand because
             # the generator loops indefinitely
             break
