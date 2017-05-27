@@ -8,7 +8,7 @@ from keras.layers import Input, Dense
 
 a = Input(shape=(32,))
 b = Dense(32)(a)
-model = Model(input=a, output=b)
+model = Model(inputs=a, outputs=b)
 ```
 
 このモデルは，`a`を入力として`b`を計算する際に必要となるあらゆる層を含むことになります．
@@ -16,7 +16,7 @@ model = Model(input=a, output=b)
 また，マルチ入力またはマルチ出力のモデルの場合は，リストを使うこともできます．
 
 ```python
-model = Model(input=[a1, a2], output=[b1, b3, b3])
+model = Model(inputs=[a1, a2], outputs=[b1, b3, b3])
 ```
 
 `Model`の詳しい解説は，[Keras functional API](/getting-started/functional-api-guide)をご覧下さい．
