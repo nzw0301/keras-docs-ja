@@ -68,7 +68,7 @@ Using TensorFlow backend.
 
 ## 新しいコードを書くための抽象的なKerasバックエンドの利用
 
-もし，あなたがTheano（th）とTesorFlow（tf）の両方で互換性があるように記述できるKerasモジュールが欲しいときは，抽象的なKerasバックエンドAPIを通じて書く必要があります．以下は導入部になります．
+もし，あなたがTheano（`th`）とTesorFlow（`tf`）の両方で互換性があるように記述できるKerasモジュールが欲しいときは，抽象的なKerasバックエンドAPIを通じて書く必要があります．以下は導入部になります．
 
 あなたは以下を通じてバックエンドモジュールをインポートできます:
 ```python
@@ -169,7 +169,7 @@ set_epsilon(e)
 
 数値演算で使われる微小値をセットします．
 
-__引数＿＿
+__引数__
 
 - e: float，新たな微小値（epsilon）．
 
@@ -370,7 +370,7 @@ __例__
 
 __Raises__
 
-無効な`dim_ordering`が与えられた場合，ValueErrorが発生します．
+- __ValueError__: 無効な`dim_ordering`が与えられた場合．
 
 ----
 
@@ -435,7 +435,7 @@ __返り値__
 
 ----
 
-## placeholder
+### placeholder
 
 ```python
 placeholder(shape=None, ndim=None, dtype=None, sparse=False, name=None)
@@ -445,7 +445,7 @@ placeholder(shape=None, ndim=None, dtype=None, sparse=False, name=None)
 
 __引数__
 
-- __shape__: プレースホルダーのshape（整数のタプル，Noneを含んでいても構いません）．
+- __shape__: プレースホルダーのshape（整数のタプル，`None`を含んでいても構いません）．
 - __ndim__: テンソルの軸の数．少なくとも{`shape`, `ndim`}から一つ指定する必要があります．両方が指定されると，`shape`が使われます．
 - __dtype__: プレースホルダーの型．
 - __sparse__: プレースホルダーがスパースの型を持つべきかどうかの真偽値．
@@ -1100,7 +1100,7 @@ __引数__
 
 __返り値__
 
-（次元数の総和より少ない）`x`のshapeと（バッチの次元の総和より少ない）`y`のshapeを連結したshapeに等しいテンソル．もし最後のランクが1なら，(batch_size, 1)に整形します．
+（次元数の総和より少ない）`x`のshapeと（バッチの次元の総和より少ない）`y`のshapeを連結したshapeに等しいテンソル．もし最後のランクが1なら，`(batch_size, 1)`に整形します．
 
 __例__
 
@@ -1196,7 +1196,7 @@ __引数__
 
 - __x__: テンソル，または変数．
 - __axis__: 整数，最大値を探すため軸．
-- __keepdims: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
+- __keepdims__: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
 
 __返り値__
 
@@ -1216,7 +1216,7 @@ __引数__
 
 - __x__: テンソル，または変数．
 - __axis__: 整数，最小値を探すため軸．
-- __keepdims: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
+- __keepdims__: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
 
 __返り値__
 
@@ -1430,7 +1430,7 @@ __引数__
 - __x__: テンソル，または変数．
 - __gamma__: 入力をスケールするためのテンソル．
 - __beta__: 入力を補正するためのテンソル．
-- __reduction_axes: 繰り返し可能な整数，軸上の値すべてにわたって正規化を行う．
+- __reduction_axes__: 繰り返し可能な整数，軸上の値すべてにわたって正規化を行う．
 - __epsilon__: 微小値．
 
 __返り値__
@@ -1456,7 +1456,7 @@ __引数__
 - __var__: バッチにおける分散．
 - __gamma__: 入力をスケールするためのテンソル．
 - __beta__: 入力を補正するためのテンソル．
-- __reduction_axes: 繰り返し可能な整数，軸上の値すべてにわたって正規化を行う．
+- __reduction_axes__: 繰り返し可能な整数，軸上の値すべてにわたって正規化を行う．
 - __epsilon__: 微小値．
 
 __返り値__
@@ -1514,7 +1514,7 @@ permute_dimensions(x, pattern)
 __引数__
 
 - __x__: テンソル，または変数．
-- __pattern__: 次元の添字かなるタプル，e.g. (0, 2, 1)．
+- __pattern__: 次元の添字かなるタプル，e.g. `(0, 2, 1)`．
 
 __返り値__
 
@@ -1535,7 +1535,7 @@ __引数__
 - __x__: リサイズのためのテンソル，または変数．
 - __height_factor__: 自然数．
 - __width_factor__: 自然数．
-- __data_format__: `"channels_first"`，または`"channels_last"`のどちらか．
+- __data_format__: `channels_first`，または`channels_last"`のどちらか．
 
 __返り値__
 
@@ -1543,14 +1543,14 @@ __返り値__
 
 __Raises__
 
-- __ValueError__: 無効な`dim_ordering`が与えられた場合．
+- __ValueError__: `data_format`が`channels_last`，または`channels_first`ではない場合．
 
 ----
 
 ### resize_volumes
 
 ```python
-resize_volumes(X, depth_factor, height_factor, width_factor, dim_ordering)
+resize_volumes(X, depth_factor, height_factor, width_factor, data_format)
 ```
 
 5次元テンソルに含まれるvolumeをリサイズします．
@@ -1561,7 +1561,7 @@ __引数__
 - __depth_factor__: 自然数．
 - __height_factor__: 自然数．
 - __width_factor__: 自然数．
-- __data_format__: `"channels_first"`，または`"channels_last"`のどちらか．
+- __data_format__: `channels_first`，または`channels_last`のどちらか．
 
 __返り値__
 
@@ -1607,7 +1607,7 @@ repeat(x, n)
 
 2次元のテンソルを繰り返します．
 
-`x`がshape (samples, dim)を持ちn=2であれば，この出力はshape (samples, 2, dim)を持ちます．
+`x`がshape (samples, dim)を持ち`n`=`2`であれば，この出力はshape`(samples, 2, dim)`を持ちます．
 
 __引数__
 
@@ -1830,7 +1830,7 @@ __返り値__
 
 ---
 
-### one-hot
+### one_hot
 
 ```python
 one_hot(indices, num_classes)
@@ -1840,12 +1840,12 @@ one_hot(indices, num_classes)
 
 __引数__
 
-- __indices__: (batch_size, dim1, dim2, ... dim(n-1))のshapeを持つn次元のテンソル．
+- __indices__: `(batch_size, dim1, dim2, ... dim(n-1))`のshapeを持つn次元のテンソル．
 - __num_classes__: 整数．いくつのクラスを考慮するか．
 
 __返り値__
 
-(batch_size, dim1, dim2, ... dim(n-1), num_classes)のshapeを持つ(n + 1)次元のone-hot表現が含まれたテンソル．
+`(batch_size, dim1, dim2, ... dim(n-1), num_classes)`のshapeを持つ(n + 1)次元のone-hot表現が含まれたテンソル．
 
 ----
 
@@ -1982,7 +1982,7 @@ __引数__
 
 - __x__: テンソル，または変数．
 - __axis__: 整数．和を計算する軸方向．
-- __keepdims: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
+- __keepdims__: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
 
 __返り値__
 
@@ -2002,7 +2002,7 @@ __引数__
 
 - __x__: テンソル，または変数．
 - __axis__: 整数．積を計算する軸方向．
-- __keepdims: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
+- __keepdims__: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
 
 __返り値__
 
@@ -2060,7 +2060,7 @@ __引数__
 
 - __x__: テンソル，または変数．
 - __axis__: 整数．分散を計算する軸方向．
-- __keepdims: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
+- __keepdims__: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
 
 __返り値__
 
@@ -2080,7 +2080,7 @@ __引数__
 
 - __x__: テンソル，または変数．
 - __axis__: 整数．標準偏差を計算する軸方向．
-- __keepdims: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
+- __keepdims__: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
 
 __返り値__
 
@@ -2120,7 +2120,7 @@ __引数__
 
 - __x__: テンソル，または変数．
 - __axis__: 整数．縮約する軸方向．
-- __keepdims: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
+- __keepdims__: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
 
 __返り値__
 
@@ -2140,7 +2140,7 @@ __引数__
 
 - __x__: テンソル，または変数．
 - __axis__: 整数．縮約する軸方向．
-- __keepdims: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
+- __keepdims__: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
 
 __返り値__
 
@@ -2246,7 +2246,7 @@ __返り値__
 exp(x)
 ```
 
-要素ごとの累積関数値．
+要素ごとの指数関数値．
 
 __引数__
 
@@ -2290,7 +2290,7 @@ __引数__
 
 - __x__: テンソル，または変数．
 - __axis__: 整数．縮約する軸方向．
-- __keepdims: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
+- __keepdims__: 次元を保つかどうかの真偽値．`keepdims`が`False`の場合，テンソルのランクは1に削減します．`keepdims`が`True`の場合，縮小された次元は1の長さにとどめます．
 
 __返り値__
 
@@ -2449,6 +2449,7 @@ __返り値__
 真偽値から成るテンソル．
 
 ----
+
 ### less
 
 ```python
@@ -2465,6 +2466,7 @@ __引数__
 __返り値__
 
 真偽値から成るテンソル．
+
 ----
 
 ### less_equal
@@ -2793,8 +2795,8 @@ categorical_crossentropy(output, target, from_logits=False)
 
 __引数__
 
-- __output__: softmaxに当てはめたテンソル（`from_logits`がTrueでない限り，`output`はロジット値で表されるでしょう）．
-- __target__: 整数のテンソル．
+- __output__: softmaxに適用したテンソル（`from_logits`がTrueでない限り，`output`はロジット値で表されるでしょう）．
+- __target__: `output`と同じshapeから成るテンソル．
 - __from_logits__: 真偽値．`output`がsoftmaxの結果，またはロジット値から成るテンソルかどうか．
 
 __返り値__
@@ -2813,7 +2815,7 @@ sparse_categorical_crossentropy(output, target, from_logits=False)
 
 __引数__
 
-- __output__: softmaxに当てはめたテンソル（`from_logits`がTrueでない限り，`output`はロジット値で表されるでしょう）．
+- __output__: softmaxに適用したテンソル（`from_logits`がTrueでない限り，`output`はロジット値で表されるでしょう）．
 - __target__: 整数のテンソル．
 - __from_logits__: 真偽値．`output`がsoftmaxの結果，またはロジット値から成るテンソルかどうか．
 
@@ -2834,7 +2836,7 @@ binary_crossentropy(output, target, from_logits=False)
 __引数__
 
 - __output__: softmaxに当てはめたテンソル（`from_logits`がTrueでない限り，`output`はロジット値で表されるでしょう）．
-- __target__: 整数のテンソル．
+- __target__: `output`と同じshapeから成るテンソル．
 - __from_logits__: 真偽値．`output`がsoftmaxの結果，またはロジット値から成るテンソルかどうか．
 
 __返り値__
@@ -2972,8 +2974,8 @@ __引数__
 - __x__: テンソル，または変数．
 - __kernel__: カーネルを表すテンソル．
 - __strides__: ストライドの整数．
-- __padding__: 文字列．`"same"`，`"causal"`，または`"valid"`．
-- __data_format__: 文字列．"channels_last"，または"channels_first"のどちらか．
+- __padding__: 文字列．`same`，`causal`，または`valid`．
+- __data_format__: 文字列`channels_last`，または`channels_first`のどちらか．
 - __dilation_rate__: 整数．ディレーションを行う割合．
 
 __返り値__
@@ -2991,11 +2993,12 @@ conv2d(x, kernel, strides=(1, 1), padding='valid', data_format=None, dilation_ra
 2次元の畳み込み．
 
 __引数__
+
 - __x__: テンソル，または変数．
 - __kernel__: カーネルを表すテンソル．
 - __strides__: ストライドの整数．
-- __padding__: 文字列．`"same"`，または`"valid"`．
-- __data_format__: 文字列．"channels_last"，または"channels_first"のどちらか．入力/カーネル/出力でTheanoもしくはTensorFlowのデータ形式を利用するかどうか．
+- __padding__: 文字列．`same`，または`valid`．
+- __data_format__: 文字列．`channels_last`，または`channels_first`のどちらか．入力/カーネル/出力でTheanoもしくはTensorFlowのデータ形式を利用するかどうか．
 - __dilation_rate__: 整数のタプル．
 
 __返り値__
@@ -3017,12 +3020,13 @@ conv2d_transpose(x, kernel, output_shape, strides=(1, 1), padding='valid', data_
 2次元の逆畳み込み（すなわち，転置畳み込み）．
 
 __引数__
+
 - __x__: テンソル，または変数．
 - __kernel__: カーネルを表すテンソル．
 - __output_shape__: 出力するshapeに対する整数の1次元のテンソル．
 - __strides__: ストライドの整数．
-- __padding__: 文字列．`"same"`，または`"valid"`．
-- __data_format__: 文字列．"channels_last"，または"channels_first"のどちらか．入力/カーネル/出力でTheanoもしくはTensorFlowのデータ形式を利用するかどうか．
+- __padding__: 文字列．`same`，または`valid`．
+- __data_format__: 文字列．`channels_last`，または`channels_first`のどちらか．入力/カーネル/出力でTheanoもしくはTensorFlowのデータ形式を利用するかどうか．
 
 __返り値__
 
@@ -3048,8 +3052,8 @@ __引数__
 - __depthwise_kernel__: 深さごとの畳み込みに対するカーネル．
 - __pointwise_kernel__: 1x1の畳み込みに対するカーネル．
 - __strides__: ストライドのタプル（長さ2）．
-- __padding__: パディングのモード．`"same"`，または`"valid"`．
-- __data_format__: 文字列．"channels_last"，または"channels_first"のどちらか．
+- __padding__: パディングのモード．`same`，または`valid`．
+- __data_format__: 文字列．`channels_last`，または`channels_first`のどちらか．
 - __dilation_rate__: 整数のタプル．ディレーションを行う割合．
 
 __返り値__
@@ -3076,9 +3080,9 @@ __引数__
 - __x__: テンソル，または変数．
 - __kernel__: カーネルのテンソル．
 - __strides__: ストライドのタプル．
-- __padding__: 文字列．"same"，または"valid"．
-- __data_format__: 文字列．"channels_last"，または"channels_first"のどちらか．入力/カーネル/出力でTheanoもしくはTensorFlowのデータ形式を利用するかどうか．
- __dilation_rate__: 3つの整数から成るタプル
+- __padding__: 文字列．`same`，または`valid`．
+- __data_format__: 文字列．`channels_last`，または`channels_first`のどちらか．入力/カーネル/出力でTheanoもしくはTensorFlowのデータ形式を利用するかどうか．
+- __dilation_rate__: 3つの整数から成るタプル
 
 __返り値__
 
@@ -3103,9 +3107,9 @@ __引数__
 - __x__: テンソル，または変数．
 - __pool_size__: 2つの整数から成るタプル．
 - __strides__: 2つの整数から成るタプル．
-- __padding__: 文字列．"same"，または"valid"．
-- __data_format__: 文字列．"channels_last"，または"channels_first"のどちらか．
-- __pool_mode__: "max"，"avg"のどちらか．
+- __padding__: 文字列．`same`，または`valid`．
+- __data_format__: 文字列．`channels_last`，または`channels_first`のどちらか．
+- __pool_mode__: `max`，`avg`のどちらか．
 
 __返り値__
 
@@ -3132,9 +3136,9 @@ __引数__
 - __x__: テンソル，または変数．
 - __pool_size__: 3つの整数から成るタプル．
 - __strides__: 3つの整数から成るタプル．
-- __padding__: 文字列．"same"，または"valid"．
-- __data_format__: 文字列．"channels_last"，または"channels_first"のどちらか．
-- __pool_mode__: "max"，"avg"のどちらか．
+- __padding__: 文字列．`same`，または`valid`．
+- __data_format__: 文字列．`channels_last`，または`channels_first`のどちらか．
+- __pool_mode__: `max`，`avg`のどちらか．
 
 __返り値__
 
@@ -3291,8 +3295,8 @@ __引数__
 
 - __y_true__: 真のラベルを含むテンソル`(samples, max_string_length)`．
 - __y_pred__: 予測値かsoftmaxの出力を含むテンソル`(samples, time_steps, num_categories)`．
-- __input_length__: y_predの各バッチの系列長を含むテンソル`(samples,1)`．
-- __label_length__: y_trueの各バッチの系列長を含むテンソル`(samples,1)`．
+- __input_length__: `y_pred`の各バッチの系列長を含むテンソル`(samples,1)`．
+- __label_length__: `y_true`の各バッチの系列長を含むテンソル`(samples,1)`．
 
 __返り値__
 
@@ -3314,7 +3318,7 @@ __引数__
 
 - __y_pred__: 予測値かsoftmaxの出力を含むテンソル`(samples, time_steps, num_categories)`．
 - __input_length__: y_predの各バッチの系列長を含むテンソル`(samples,1)`．
-- __greedy__: trueなら高速な最適パス探索を行います．このとき，辞書を使わない
+- __greedy__: `true`なら高速な最適パス探索を行います．このとき，辞書を使わない
 - __beam_width__: `greedy`が`False`の場合，この幅を使ったビームサーチを行います．
 - __top_paths__: `greedy`が`False`の場合，最も辿る可能性の高いパスがどれだけあるか返されます．
 
