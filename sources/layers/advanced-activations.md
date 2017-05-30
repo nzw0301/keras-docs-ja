@@ -53,14 +53,14 @@ __出力shape__
 __引数__
 
 - __alpha_initializer__：重みを初期化する関数．
-- __alpha_regularizer__：重みを正規化する関数．
+- __alpha_regularizer__：重みを正則化する関数．
 - __alpha_constraint__：重みに対する制約．
 - __shared_axes__：活性化関数で共有する学習パラメータの軸．
 	例えば，incoming feature mapsが，出力shapeとして`(batch, height, width, channels)`を持つ，2Dコンボリューションからなるもので，空間全体で各フィルターごとに一組しかパラメータを持たないたない場合にそのパラメータを共有したければ，`shared_axes=[1, 2]`とセットして下さい．
 
 __参考文献__
 
-- [Delving Deep into Rectifiers：Surpassing Human-Level Performance on ImageNet Classification](https://arxiv.org/abs/1502.01852)
+- [Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification](https://arxiv.org/abs/1502.01852)
 
 ----
 
