@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L615)</span>
+<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L723)</span>
 ### Dense
 
 ```python
@@ -104,7 +104,7 @@ __参考文献__
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L463)</span>
+<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L458)</span>
 ### Flatten
 
 ```python
@@ -171,7 +171,7 @@ model.add(Reshape((-1, 2, 2)))
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L411)</span>
+<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L406)</span>
 ### Permute
 
 ```python
@@ -206,7 +206,7 @@ __出力の型__
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L498)</span>
+<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L493)</span>
 ### RepeatVector
 
 ```python
@@ -242,7 +242,7 @@ __出力の型__
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L540)</span>
+<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L535)</span>
 ### Lambda
 
 ```python
@@ -302,7 +302,7 @@ __出力の型__
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L871)</span>
+<span style="float:right;">[[source]](https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L866)</span>
 ### ActivityRegularization
 
 ```python
