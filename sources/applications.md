@@ -16,7 +16,7 @@ Kerasの応用は事前学習した重みを利用可能な深層学習のモデ
 - [InceptionV3](#inceptionv3)
 
 （Xceptionを除く）これらすべてのアーキテクチャは，TensorFlowとTheanoの両方に対応しており，`~/.keras/keras.json`の設定にしたがってモデルはインスタンス化されます．
-例えば，`image_dim_ordering=tf`とした際は，このリポジトリからロードされるモデルは，TensorFlowの次元の順序"Width-Height-Depth"にしたがって構築されます．
+例えば，`image_dim_ordering=channels_last`とした際は，このリポジトリからロードされるモデルは，TensorFlowの次元の順序"Width-Height-Depth"にしたがって構築されます．
 
 `SeparableConvolution`を用いているため，XceptionモデルはTensorFlowでのみ使用可能です．
 
@@ -184,7 +184,7 @@ ImageNetで事前学習した重みを利用可能なXception V1モデル．
 ImageNetにおいて，このモデルのtop-1のvalidation accuracyは0.790で，top-5のvalidation accuracyは0.945です．
 
 `SeparableConvolution`を用いているため，XceptionモデルはTensorFlowでのみ使用可能であることに注意してください．
-さらにデータフォーマットは"channels_last" (width, height, channels)のみサポートしています．
+さらにデータフォーマットは"channels_last" (height, width, channels)のみサポートしています．
 
 デフォルトの入力サイズは299x299．
 
@@ -195,8 +195,8 @@ ImageNetにおいて，このモデルのtop-1のvalidation accuracyは0.790で�
 - input_tensor: モデルの入力画像として利用するためのオプションのKerasテンソル (つまり，`layers.Input()`の出力)
 - input_shape: オプショナルなshapeのタプル，`include_top`がFalseの場合のみ指定可能 (そうでないときは入力のshapeは`(299, 299, 3)`)．正確に3つの入力チャンネルをもつ必要があり，width と height は71以上にする必要があります．例えば`(150, 150, 3)`は有効な値です．
 - pooling: 特徴量抽出のためのオプショナルなpooling mode，`include_top`が`False`の場合のみ指定可能．
-    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンサーであることを意味しています．
-    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンサーになることを意味しています．
+    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンソルであることを意味しています．
+    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンソルになることを意味しています．
     - `max`：global max poolingが適用されることを意味します．
 - classes: 画像のクラス分類のためのオプショナルなクラス数，`include_top`がTrueかつ`weights`が指定されていない場合のみ指定可能．
 
@@ -210,7 +210,7 @@ Kerasのモデルインスタンス．
 
 ### License
 
-These weights are trained by ourselves and are released under the MIT license.
+この重みは私達自身が学習したもので，MITライセンスの下で公開されています．
 
 -----
 
@@ -223,7 +223,7 @@ keras.applications.vgg16.VGG16(include_top=True, weights='imagenet', input_tenso
 ImageNetで事前学習した重みを利用可能なVGG16モデル．
 
 このモデルは，TheanoとTensorFlowの両方のbackendで利用でき，
-"channels_first" データフォーマット (channels, width, height) か "channels_last" データフォーマット (width, height, channels)の両方で構築可能です．
+"channels_first" データフォーマット (channels, height, width) か "channels_last" データフォーマット (height, width, channels)の両方で構築可能です．
 
 デフォルトの入力サイズは224x224．
 
@@ -232,10 +232,10 @@ ImageNetで事前学習した重みを利用可能なVGG16モデル．
 - include_top: ネットワークの出力層側にある3つの全結合層を含むかどうか．
 - weights: `None` (ランダム初期化) か "imagenet" (ImageNetで学習した重み) のどちらか一方．
 - input_tensor: モデルの入力画像として利用するためのオプションのKerasテンソル (つまり，`layers.Input()`の出力)
-- input_shape: オプショナルなshapeのタプル，include_topがFalseの場合のみ指定可能 (そうでないときは入力のshapeは`(224, 224, 3)` (`tf`のとき) か `(3, 224, 224)` (`th`のとき) )．正確に3つの入力チャンネルをもつ必要があり，width と height は48以上にする必要があります．例えば`(200, 200, 3)`は有効値．
+- input_shape: オプショナルなshapeのタプル，`include_top`がFalseの場合のみ指定可能 (そうでないときは入力のshapeは`(224, 224, 3)` (`tf`のとき) か `(3, 224, 224)` (`th`のとき) )．正確に3つの入力チャンネルをもつ必要があり，width と height は48以上にする必要があります．例えば`(200, 200, 3)`は有効値．
 - pooling: 特徴量抽出のためのオプショナルなpooling mode，`include_top`が`False`の場合のみ指定可能．
-    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンサーであることを意味しています．
-    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンサーになることを意味しています．
+    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンソルであることを意味しています．
+    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンソルになることを意味しています．
     - `max`：global max poolingが適用されることを意味します．
 - classes: 画像のクラス分類のためのオプショナルなクラス数，`include_top`がTrueかつ`weights`が指定されていない場合のみ指定可能．
 
@@ -249,7 +249,7 @@ Kerasのモデルインスタンス．
 
 ### License
 
-These weights are ported from the ones [released by VGG at Oxford](http://www.robots.ox.ac.uk/~vgg/research/very_deep/) under the [Creative Commons Attribution License](https://creativecommons.org/licenses/by/4.0/).
+この重みは[Oxford大学のVGG](http://www.robots.ox.ac.uk/~vgg/research/very_deep/)により[Creative Commons Attribution License](https://creativecommons.org/licenses/by/4.0/)の下で公開されたものを移植しています．
 
 -----
 
@@ -263,7 +263,7 @@ keras.applications.vgg19.VGG19(include_top=True, weights='imagenet', input_tenso
 ImageNetで事前学習した重みを利用可能なVGG19モデル．
 
 このモデルは，TheanoとTensorFlowの両方のbackendで利用でき，
-"channels_first" データフォーマット (channels, width, height) か "channels_last" データフォーマット (width, height, channels)の両方で構築可能です．
+"channels_first" データフォーマット (channels, height, width) か "channels_last" データフォーマット (height, width, channels)の両方で構築可能です．
 
 デフォルトの入力サイズは224x224．
 
@@ -274,8 +274,8 @@ ImageNetで事前学習した重みを利用可能なVGG19モデル．
 - input_tensor: モデルの入力画像として利用するためのオプションのKerasテンソル (つまり，`layers.Input()`の出力)
 - input_shape: オプショナルなshapeのタプル，`include_top`がFalseの場合のみ指定可能 (そうでないときは入力のshapeは`(224, 224, 3)` (`channels_last`データフォーマットのとき) か `(3, 224, 224)` (`channels_first`データフォーマットのとき) )．正確に3つの入力チャンネルをもつ必要があり，width と height は48以上にする必要があります．例えば`(200, 200, 3)`は有効値．
 - pooling: 特徴量抽出のためのオプショナルなpooling mode，`include_top`が`False`の場合のみ指定可能．
-    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンサーであることを意味しています．
-    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンサーになることを意味しています．
+    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンソルであることを意味しています．
+    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンソルになることを意味しています．
     - `max`：global max poolingが適用されることを意味します．
 - classes: 画像のクラス分類のためのオプショナルなクラス数，`include_top`がTrueかつ`weights`が指定されていない場合のみ指定可能．
 
@@ -290,7 +290,7 @@ Kerasのモデルインスタンス．
 
 ### License
 
-These weights are ported from the ones [released by VGG at Oxford](http://www.robots.ox.ac.uk/~vgg/research/very_deep/) under the [Creative Commons Attribution License](https://creativecommons.org/licenses/by/4.0/).
+この重みは[Oxford大学のVGG](http://www.robots.ox.ac.uk/~vgg/research/very_deep/)により[Creative Commons Attribution License](https://creativecommons.org/licenses/by/4.0/)の下で公開されたものを移植しています．
 
 -----
 
@@ -304,7 +304,7 @@ keras.applications.resnet50.ResNet50(include_top=True, weights='imagenet', input
 ImageNetで事前学習した重みを利用可能なResNet50モデル．
 
 このモデルは，TheanoとTensorFlowの両方のbackendで利用でき，
-"channels_first" データフォーマット (channels, width, height) か "channels_last" データフォーマット (width, height, channels)の両方で構築可能です．
+"channels_first" データフォーマット (channels, height, width) か "channels_last" データフォーマット (height, width, channels)の両方で構築可能です．
 
 デフォルトの入力サイズは224x224．
 
@@ -315,8 +315,8 @@ ImageNetで事前学習した重みを利用可能なResNet50モデル．
 - input_tensor: モデルの入力画像として利用するためのオプションのKerasテンソル (つまり，`layers.Input()`の出力)
 - input_shape: オプショナルなshapeのタプル，`include_top`がFalseの場合のみ指定可能 (そうでないときは入力のshapeは`(224, 224, 3)` (`channels_last`データフォーマットのとき) か `(3, 224, 224)` (`channels_first`データフォーマットのとき) )．正確に3つの入力チャンネルをもつ必要があり，width と height は197以上にする必要があります．例えば`(200, 200, 3)`は有効値．
 - pooling: 特徴量抽出のためのオプショナルなpooling mode，`include_top`が`False`の場合のみ指定可能．
-    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンサーであることを意味しています．
-    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンサーになることを意味しています．
+    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンソルであることを意味しています．
+    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンソルになることを意味しています．
     - `max`：global max poolingが適用されることを意味します．
 - classes: 画像のクラス分類のためのオプショナルなクラス数，`include_top`がTrueかつ`weights`が指定されていない場合のみ指定可能．
 
@@ -330,7 +330,7 @@ Kerasのモデルインスタンス．
 
 ### License
 
-These weights are ported from the ones [released by Kaiming He](https://github.com/KaimingHe/deep-residual-networks) under the [MIT license](https://github.com/KaimingHe/deep-residual-networks/blob/master/LICENSE).
+この重みは[Kaiming He](https://github.com/KaimingHe/deep-residual-networks)により[MITライセンス](https://github.com/KaimingHe/deep-residual-networks/blob/master/LICENSE)の下で公開されたものを移植しています．
 
 -----
 
@@ -340,7 +340,7 @@ These weights are ported from the ones [released by Kaiming He](https://github.c
 ImageNetで事前学習した重みを利用可能なInception V3モデル．
 
 このモデルは，TheanoとTensorFlowの両方のbackendで利用でき，
-"channels_first" データフォーマット (channels, width, height) か "channels_last" データフォーマット (width, height, channels)の両方で構築可能です．
+"channels_first" データフォーマット (channels, height, width) か "channels_last" データフォーマット (height, width, channels)の両方で構築可能です．
 
 デフォルトの入力サイズは299x299．
 
@@ -355,8 +355,8 @@ keras.applications.inception_v3.InceptionV3(include_top=True, weights='imagenet'
 - input_tensor: モデルの入力画像として利用するためのオプションのKerasテンソル (つまり，`layers.Input()`の出力)
 - input_shape: オプショナルなshapeのタプル，`include_top`がFalseの場合のみ指定可能 (そうでないときは入力のshapeは`(299, 299, 3)` (`channels_last`データフォーマットのとき) か `(3, 299, 299)` (`channels_first`データフォーマットのとき) )．正確に3つの入力チャンネルをもつ必要があり，width と height は139以上にする必要があります．例えば`(150, 150, 3)`は有効値．
 - pooling: 特徴量抽出のためのオプショナルなpooling mode，`include_top`が`False`の場合のみ指定可能．
-    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンサーであることを意味しています．
-    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンサーになることを意味しています．
+    - `None`：モデルの出力が，最後のconvolutional layerの4Dテンソルであることを意味しています．
+    - `avg`：最後のconvolutional layerの出力にglobal average poolingが適用されることで，モデルの出力が2Dテンソルになることを意味しています．
     - `max`：global max poolingが適用されることを意味します．
 - classes: 画像のクラス分類のためのオプショナルなクラス数，`include_top`がTrueかつ`weights`が指定されていない場合のみ指定可能．
 
@@ -370,4 +370,4 @@ Kerasのモデルインスタンス．
 
 ### License
 
-These weights are trained by ourselves and are released under the MIT license.
+この重みは [Apacheライセンス](https://github.com/tensorflow/models/blob/master/LICENSE)の下で公開されています．
