@@ -1,5 +1,7 @@
 # Keras: Pythonの深層学習ライブラリ
 
+<img src='https://s3.amazonaws.com/keras.io/img/keras-logo-2018-large-1200.png', style='max-width: 600px;'>
+
 ## Kerasとは
 
 Kerasは，Pythonで書かれた，[TensorFlow](https://github.com/tensorflow/tensorflow)または[CNTK](https://github.com/Microsoft/cntk)，[Theano](https://github.com/Theano/Theano)上で実行可能な高水準のニューラルネットワークライブラリです．
@@ -14,7 +16,7 @@ Kerasは，迅速な実験を可能にすることに重点を置いて開発さ
 
 [Keras.io](https://keras.io)のドキュメントを読んでください．
 
-Kerasは**Python 2.7-3.5**に対応しています．
+Kerasは**Python 2.7-3.6**に対応しています．
 
 
 ------------------
@@ -97,7 +99,7 @@ loss_and_metrics = model.evaluate(x_test, y_test, batch_size=128)
 classes = model.predict(x_test, batch_size=128)
 ```
 
-質問応答システムや画像分類，ニューラルチューリングマシン，word2vecやその他多くのモデルは高速かつシンプルに実装可能です．深層学習の根底にあるアイデアはとてもシンプルです．実装もシンプルであるべきではないでしょうか？
+質問応答システムや画像分類，ニューラルチューリングマシンやその他多くのモデルは高速かつシンプルに実装可能です．深層学習の根底にあるアイデアはとてもシンプルです．実装もシンプルであるべきではないでしょうか？
 
 Kerasについてのより詳細なチュートリアルについては，以下を参照してください．
 
@@ -113,39 +115,48 @@ Kerasについてのより詳細なチュートリアルについては，以下
 
 ## インストール
 
-Kerasは以下のライブラリに依存しています．
 
-- numpy, scipy
-- yaml
-- HDF5とh5py （モデルの保存や読み込み関数を使う場合のみ）
-- cuDNN: オプションですが，CNNを使用する場合は推奨
+Kerasをインストールする前に，TensorFlow，Theano，CNTKバックエンドエンジンの1つをインストールしてください．
+TensorFlowバックエンドを推奨します．
+
+- [TensorFlow installation instructions](https://www.tensorflow.org/install/)
+- [Theano installation instructions](http://deeplearning.net/software/theano/install.html#install)
+- [CNTK installation instructions](https://docs.microsoft.com/en-us/cognitive-toolkit/setup-cntk-on-your-machine)
+
+また以下の**オプショナルな依存ライブラリ**のインストールも考慮してください．
 
 
-*Tensorflowをバックエンドで使用する場合:*
+- cuDNN：（KerasをGPU上で実行するつもりなら推奨）
+- HDF5とh5py：（モデルの保存や読み込み関数を使う場合のみ）
+- graphviz and pydot：（モデルのグラフをプロットする[可視化ユーティリティ](./visualization)で使います）
 
-- TensorFlow
-    - [See installation instructions](https://github.com/tensorflow/tensorflow#download-and-setup).
+これが終わったら，Kerasをインストールします．
+Kerasのインストールには2通りの方法があります．
 
-*CNTKをバックエンドで使用する場合:*
-
-- CNTK
-    - [See installation instructions](https://github.com/Microsoft/cntk)
-
-*Theanoをバックエンドで使用する場合:*
-
-- Theano
-    - [See installation instructions](http://deeplearning.net/software/theano/install.html#install).
-
-Kerasをインストールするには，まず，ターミナル上で`cd`コマンドでkerasのフォルダに移動してから以下のインストールコマンドを実行してください．
-
-```sh
-sudo python setup.py install
-```
-
-PyPIからもインストールできます．
+- **PyPIからKerasをインストール (推奨)：**
 
 ```sh
 sudo pip install keras
+```
+
+もしvirtualenvを使っているなら，sudoを使わないことも可能です：
+
+```sh
+pip install keras
+```
+
+- **別方法: Githubのソースからインストール：**
+最初に，`git`でKerasをクローンします：
+
+```sh
+git clone https://github.com/fchollet/keras.git
+```
+
+それから，ターミナル上で`cd`コマンドでkerasのフォルダに移動してからインストールコマンドを実行してください．
+
+```sh
+cd keras
+sudo python setup.py install
 ```
 
 
@@ -162,12 +173,12 @@ sudo pip install keras
 
 ## サポート
 
-質問をしたり，開発に関するディスカッションに参加できます:
+質問をしたり，開発に関するディスカッションに参加できます：
 
 - [Keras Google group](https://groups.google.com/forum/#!forum/keras-users)上で
 - [Keras Slack channel](https://kerasteam.slack.com)上で．チャンネルへのリクエストするには[このリンク](https://keras-slack-autojoin.herokuapp.com/)を使ってください．
 
- [Githubのissues](https://github.com/fchollet/keras/issues)に**バグレポートや機能リクエスト**を投稿できます．まず[ガイドライン](https://github.com/fchollet/keras/blob/master/CONTRIBUTING.md)を必ず読んでください．
+ [Githubのissues](https://github.com/fchollet/keras/issues)に**バグレポートや機能リクエスト**（だけ）を投稿できます．まず[ガイドライン](https://github.com/fchollet/keras/blob/master/CONTRIBUTING.md)を必ず読んでください．
 
 ------------------
 
